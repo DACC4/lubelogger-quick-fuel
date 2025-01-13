@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="Track your vehicle's fuel consumption and costs" />
+    
+    <!-- PWA related meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="LubeLogger Quick Fuel" />
+    
+    <!-- Home screen icons -->
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192x192.png" />
+    <link rel="apple-touch-startup-image" href="%PUBLIC_URL%/splash.png" />
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- prevent phone number detection on iOS -->
+    <meta name="format-detection" content="telephone=no" />
+    
+    <title>LubeLogger Quick Fuel</title>
+  </head>
+  <body>
+    <noscript>
+      <div class="noscript-message">
+        You need to enable JavaScript to run this app.
+      </div>
+    </noscript>
+    <div id="root"></div>
+    
+    <!-- Optional: Add loading indicator that shows before React loads -->
+    <div id="loader" class="app-loader">
+      <div class="loader-content">
+        <img src="%PUBLIC_URL%/icon-192x192.png" alt="Loading..." width="64" height="64" />
+        <p>Loading LubeLogger Quick Fuel...</p>
+      </div>
+    </div>
+
+    <script>
+      // Remove loader when app is ready
+      window.addEventListener('load', function() {
+        const loader = document.getElementById('loader');
+        if (loader) {
+          loader.style.display = 'none';
+        }
+      });
+
+      // Register service worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(function(err) {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+
+    <!-- Inline critical CSS for loader -->
+    <style>
+      .app-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loader-content {
+        text-align: center;
+      }
+
+      .loader-content img {
+        animation: pulse 1.5s infinite;
+      }
+
+      .loader-content p {
+        margin-top: 1rem;
+        color: #4b5563;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+
+      .noscript-message {
+        padding: 20px;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #dc2626;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
+    </style>
+  </body>
+</html>

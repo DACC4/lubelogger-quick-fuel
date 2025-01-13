@@ -1,0 +1,34 @@
+{
+    "short_name": "LubeLogger Quick Fuel",
+    "name": "LubeLogger Quick Fuel - Easy Vehicle Fuel Tracking",
+    "description": "Track your vehicle's fuel consumption and costs on the go",
+    "icons": [
+      {
+        "src": "favicon.ico",
+        "sizes": "64x64",
+        "type": "image/x-icon"
+      },
+      {
+        "src": "lubelogger_icon_192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "any maskable"
+      }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#2563eb",
+    "background_color": "#ffffff",
+    "orientation": "portrait",
+    "categories": ["utilities", "productivity"],
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "scope": "/",
+    "lang": "en",
+    "dir": "ltr",
+    "display_override": ["standalone", "minimal-ui"],
+    "handle_links": "preferred",
+    "edge_side_panel": {
+      "preferred_width": 400
+    }
+}

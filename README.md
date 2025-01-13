@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LubeLogger Quick Fuel
+A Progressive Web Application for tracking vehicle fuel consumption. This application integrates with LubeLogger's API to provide offline-capable fuel logging functionality.
 
-## Getting Started
+## Features
+- 🚗 Vehicle selection and management
+- ⛽ Fuel log entry with detailed tracking
+- 📱 Progressive Web App (installable)
+- 🔄 Offline functionality with automatic sync
+- 🔒 Secure authentication
+- 📊 Support for multiple fuel types
+- 💾 Automatic form data saving
 
-First, run the development server:
+## Prerequisites
+- Node.js (v23 or higher)
+- npm or yarn
+- A LubeLogger instance with API access
 
+## Installation
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/fuel-logger-pwa.git
+cd fuel-logger-pwa
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Create a .env file in the root directory:
+```env
+REACT_APP_API_URL=https://your-lubelogger-instance.com
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
+To run the application in development mode:
 
-## Learn More
+```bash
+npm start
+# or
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+The application will be available at `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Building for Production
+To create a production build:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+# or
+yarn build
+```
 
-## Deploy on Vercel
+The build files will be created in the `build/` directory.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## LubeLogger behind reverse proxy
+Add this config to your NGINX Proxy Manager to allow CORS requests for /api route :
+```
+location /api {
+   # CORS headers
+   add_header 'Access-Control-Allow-Origin' '*' always;
+   add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+   add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   # Handle preflight requests (OPTIONS)
+   if ($request_method = 'OPTIONS') {
+      add_header 'Access-Control-Allow-Origin' '*' always;
+      add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, OPTIONS' always;
+      add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
+      add_header 'Access-Control-Max-Age' 1728000;
+      add_header 'Content-Type' 'text/plain charset=UTF-8';
+      add_header 'Content-Length' 0;
+      return 204;
+   }
+
+   proxy_pass $forward_scheme://$server:$port;
+   proxy_set_header Host $host;
+   proxy_cache_bypass $http_upgrade;
+}
+```
+
+## Configuration
+The application can be configured through environment variables:
+
+- `REACT_APP_API_URL`: The URL of your LubeLogger instance
+- `REACT_APP_CACHE_VERSION`: Version string for cache management
+- `REACT_APP_SYNC_INTERVAL`: Interval for background sync (in milliseconds)
+
+## Testing
+Run the test suite:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+## PWA Features
+The application supports:
+- Offline operation
+- Background sync
+- Add to home screen
+- Push notifications (where supported)
+- Automatic updates
+
+## Project Structure
+```
+src/
+├── api/              # API integration
+├── components/       # React components
+├── context/         # Context providers
+├── hooks/           # Custom hooks
+├── services/        # Business logic
+├── utils/           # Utilities
+└── ...
+```
+
+## Contributing
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## Troubleshooting
+### Common Issues
+1. **App not working offline**
+   - Check that the service worker is registered
+   - Verify the cache configuration
+   - Ensure all required assets are precached
+
+2. **Authentication issues**
+   - Verify your LubeLogger API URL
+   - Check your credentials
+   - Ensure cookies are enabled
+
+3. **Sync not working**
+   - Check your internet connection
+   - Verify background sync is supported in your browser
+   - Check the browser's task manager for background sync tasks
+
+## License
+MIT License - see LICENSE file for details
+
+## Support
+For support, please create an issue in the GitHub repository or contact the development team.
