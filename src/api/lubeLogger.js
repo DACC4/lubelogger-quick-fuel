@@ -8,6 +8,18 @@ class LubeLoggerAPI {
     this.auth = btoa(`${username}:${password}`);
   }
 
+  setBaseURL(baseURL) {
+    if (baseURL.endsWith("/")) {
+      baseURL = baseURL.slice(0, -1);
+    }
+
+    if (!baseURL.startsWith("http")) {
+      baseURL = `https://${baseURL}`;
+    }
+
+    this.baseURL = baseURL;
+  }
+
   clearAuth() {
     this.auth = null;
   }
@@ -42,7 +54,7 @@ class LubeLoggerAPI {
   // Auth
   async validateCredentials(lubeLoggerURL, username, password) {
     this.setAuth(username, password);
-    this.baseURL = lubeLoggerURL;
+    this.setBaseURL(lubeLoggerURL);
     try {
       // Test credentials by fetching vehicles
       await this.getVehicles();

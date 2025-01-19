@@ -13,8 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="LubeLogger Quick Fuel" />
     
     <!-- Home screen icons -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192x192.png" />
-    <link rel="apple-touch-startup-image" href="%PUBLIC_URL%/splash.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/lubelogger_icon_192.png" />
     
     <!-- PWA manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -32,10 +31,10 @@
     </noscript>
     <div id="root"></div>
     
-    <!-- Optional: Add loading indicator that shows before React loads -->
+    <!-- Add loading indicator that shows before React loads -->
     <div id="loader" class="app-loader">
       <div class="loader-content">
-        <img src="%PUBLIC_URL%/icon-192x192.png" alt="Loading..." width="64" height="64" />
+        <img src="%PUBLIC_URL%/lubelogger_icon_192.png" alt="Loading..." width="64" height="64" />
         <p>Loading LubeLogger Quick Fuel...</p>
       </div>
     </div>
@@ -62,6 +61,14 @@
         });
       }
     </script>
+
+    <!-- CSS for IOS safe area -->
+    <style>
+      html {
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        height: 100%;
+      }
+    </style>
 
     <!-- Inline critical CSS for loader -->
     <style>
