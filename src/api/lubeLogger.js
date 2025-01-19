@@ -1,6 +1,6 @@
 class LubeLoggerAPI {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
+  constructor() {
+    this.baseURL = null;
     this.auth = null;
   }
 
@@ -13,6 +13,10 @@ class LubeLoggerAPI {
   }
 
   async request(endpoint, options = {}) {
+    if (!this.baseURL) {
+      throw new Error("API baseURL not set");
+    }
+
     const headers = {
       ...(this.auth && { Authorization: `Basic ${this.auth}` }),
       ...options.headers,
@@ -36,8 +40,9 @@ class LubeLoggerAPI {
   }
 
   // Auth
-  async validateCredentials(username, password) {
+  async validateCredentials(lubeLoggerURL, username, password) {
     this.setAuth(username, password);
+    this.baseURL = lubeLoggerURL;
     try {
       // Test credentials by fetching vehicles
       await this.getVehicles();
@@ -50,7 +55,6 @@ class LubeLoggerAPI {
 
   // Vehicles
   async getVehicles() {
-    console.log("getVehicles");
     const allVehicles = await this.request("/api/vehicles");
     return allVehicles.filter((vehicle) => vehicle.soldDate == null);
   }
@@ -89,6 +93,4 @@ class LubeLoggerAPI {
   }
 }
 
-export const api = new LubeLoggerAPI(
-  process.env.REACT_APP_API_URL || "https://default.api.com",
-);
+export const api = new LubeLoggerAPI();

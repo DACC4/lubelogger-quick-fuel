@@ -17,8 +17,8 @@ export const AuthProvider = ({ children }) => {
     const initAuth = async () => {
       const credentials = await storageService.getCredentials();
       if (credentials) {
-        const { username, password } = credentials;
-        const isValid = await api.validateCredentials(username, password);
+        const { lubeLoggerURL, username, password } = credentials;
+        const isValid = await api.validateCredentials(lubeLoggerURL, username, password);
         setIsAuthenticated(isValid);
       }
       setIsLoading(false);
@@ -27,11 +27,11 @@ export const AuthProvider = ({ children }) => {
     initAuth();
   }, []);
 
-  const login = async (username, password) => {
+  const login = async (lubeLoggerURL, username, password) => {
     try {
-      const isValid = await api.validateCredentials(username, password);
+      const isValid = await api.validateCredentials(lubeLoggerURL, username, password);
       if (isValid) {
-        await storageService.saveCredentials(username, password);
+        await storageService.saveCredentials(lubeLoggerURL, username, password);
         setIsAuthenticated(true);
       }
       return isValid;

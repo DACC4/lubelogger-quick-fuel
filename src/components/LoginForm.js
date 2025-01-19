@@ -13,6 +13,7 @@ import { useAuth } from "../hooks/useAuth";
 
 const LoginForm = () => {
   const { login } = useAuth();
+  const [lubeLoggerURL, setlubeLoggerURL] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,7 +25,7 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const success = await login(username, password);
+      const success = await login(lubeLoggerURL, username, password);
       if (!success) {
         setError("Invalid credentials");
       }
@@ -41,7 +42,6 @@ const LoginForm = () => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bgcolor="grey.100"
     >
       <Container maxWidth="sm">
         <Card>
@@ -55,6 +55,15 @@ const LoginForm = () => {
                   {error}
                 </Alert>
               )}
+
+              <TextField
+                label="Lube Logger URL"
+                value={lubeLoggerURL}
+                onChange={(e) => setlubeLoggerURL(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
 
               <TextField
                 label="Username"

@@ -24,11 +24,6 @@ cd lubelogger-quick-fuel
 npm install
 ```
 
-3. Create a .env file in the root directory:
-```env
-REACT_APP_API_URL=https://your-lubelogger-instance.com
-```
-
 ## Development
 To run the application in development mode:
 
@@ -72,11 +67,6 @@ location /api {
    proxy_cache_bypass $http_upgrade;
 }
 ```
-
-## Configuration
-The application can be configured through environment variables:
-
-- `REACT_APP_API_URL`: The URL of your LubeLogger instance
 
 ## Project Structure
 ```

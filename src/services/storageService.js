@@ -9,8 +9,8 @@ class StorageService {
   }
 
   // Credentials management
-  async saveCredentials(username, password) {
-    const encoded = btoa(JSON.stringify({ username, password }));
+  async saveCredentials(lubeLoggerURL, username, password) {
+    const encoded = btoa(JSON.stringify({ lubeLoggerURL, username, password }));
     localStorage.setItem(this.KEYS.CREDENTIALS, encoded);
   }
 
@@ -21,7 +21,7 @@ class StorageService {
   }
 
   async clearCredentials() {
-    localStorage.removeItem(this.KEYS.CREDENTIALS);
+    localStorage.clear();
   }
 
   // Vehicles cache
