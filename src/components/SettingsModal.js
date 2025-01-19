@@ -1,4 +1,3 @@
-// SettingsModal.js
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
@@ -22,7 +21,7 @@ import { useAuth } from "../hooks/useAuth";
 import { storageService } from "../services/storageService";
 
 // 1) Import your custom theme hook
-import { useCustomTheme } from "../ThemeProvider";
+import { useCustomTheme } from "../context/ThemeProvider";
 
 const SettingsModal = () => {
   const [isOpen, setIsOpen] = useState(false);

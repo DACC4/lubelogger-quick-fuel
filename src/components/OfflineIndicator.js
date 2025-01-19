@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, useTheme, Paper } from "@mui/material";
-
-// You can replace MUI icons or keep lucide-react icons if you prefer.
-// MUI icons for illustration:
 import CloudIcon from "@mui/icons-material/Cloud";
 import WifiOffIcon from "@mui/icons-material/WifiOff";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";

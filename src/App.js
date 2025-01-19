@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
-import { CustomThemeProvider } from "./ThemeProvider";
+import { CustomThemeProvider } from "./context/ThemeProvider";
 import { useAuth } from "./hooks/useAuth";
 import LoginForm from "./components/LoginForm";
 import VehicleSelector from "./components/VehicleSelector";
