@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "lucide-react": "^0.471.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
@@ -25,7 +28,7 @@
     "build": "react-scripts build",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write src/**/*.{js,css}",
+    "format": "prettier --write src/**/*.js",
     "serve": "serve -s build"
   },
   "devDependencies": {
@@ -35,8 +38,7 @@
     "eslint-plugin-react": "^7.37.3",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
-    "serve": "^14.2.4",
-    "tailwindcss": "^3.4.17"
+    "serve": "^14.2.4"
   },
   "browserslist": {
     "production": [

@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
-import { AuthProvider } from './context/AuthContext';
-import { useAuth } from './hooks/useAuth';
-import LoginForm from './components/LoginForm';
-import VehicleSelector from './components/VehicleSelector';
-import FuelLogForm from './components/FuelLogForm';
-import OfflineIndicator from './components/OfflineIndicator';
-import { syncService } from './services/syncService';
-import SettingsModal from './components/SettingsModal';
+import React, { useState } from "react";
+import { AuthProvider } from "./context/AuthContext";
+import { CustomThemeProvider } from "./ThemeProvider";
+import { useAuth } from "./hooks/useAuth";
+import LoginForm from "./components/LoginForm";
+import VehicleSelector from "./components/VehicleSelector";
+import FuelLogForm from "./components/FuelLogForm";
+import OfflineIndicator from "./components/OfflineIndicator";
+import { syncService } from "./services/syncService";
+import SettingsModal from "./components/SettingsModal";
 
-// Main app content when authenticated
+import {
+  Box,
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Paper,
+  Button,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const AuthenticatedApp = () => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 
@@ -17,81 +29,64 @@ const AuthenticatedApp = () => {
   };
 
   const handleLogSuccess = () => {
-    // Optionally reset vehicle selection or show success message
-    // For now, we'll just keep the form visible for multiple entries
+    // Optionally handle success state
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-[var(--dark-bg-color)]">
-      {/* Header */}
-      <header className="bg-white shadow dark:bg-[var(--dark-card-color)]">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-900 dark:text-[var(--dark-text-color)]">LubeLogger Quick Fuel</h1>
+    <Box minHeight="100vh">
+      {/* Header / AppBar */}
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            LubeLogger Quick Fuel
+          </Typography>
           <SettingsModal />
-        </div>
-      </header>
+        </Toolbar>
+      </AppBar>
 
-      {/* Main content */}
-      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      {/* Main Content */}
+      <Container maxWidth="lg" sx={{ py: 3 }}>
         {!selectedVehicle ? (
           <VehicleSelector onVehicleSelect={handleVehicleSelect} />
         ) : (
-          <div>
-            <div className="mb-6 flex items-center">
-              <button
+          <Box>
+            <Box display="flex" alignItems="center" mb={3}>
+              <Button
                 onClick={() => setSelectedVehicle(null)}
-                className="mr-4 flex items-center text-sm text-gray-600 hover:text-gray-900 dark:text-[var(--dark-text-color)] dark:hover:text-[var(--dark-hover-color)]"
+                startIcon={<ArrowBackIcon />}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  className="w-5 h-5 mr-2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
                 Back
-              </button>
-              <div>
-                <h2 className="text-lg font-medium text-gray-900 dark:text-[var(--dark-text-color)]">
-                  {selectedVehicle.name}
-                </h2>
-              </div>
-            </div>
-            <FuelLogForm 
-              vehicle={selectedVehicle} 
-              onSuccess={handleLogSuccess} 
-            />
-          </div>
+              </Button>
+              <Typography variant="h6" ml={2}>
+                {selectedVehicle.name}
+              </Typography>
+            </Box>
+            <Paper variant="outlined">
+              <FuelLogForm vehicle={selectedVehicle} onSuccess={handleLogSuccess} />
+            </Paper>
+          </Box>
         )}
-      </main>
+      </Container>
 
       {/* Offline status indicator */}
       <OfflineIndicator />
-    </div>
+    </Box>
   );
 };
 
-// Main App component
 const App = () => {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <CustomThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </CustomThemeProvider>
   );
 };
 
-// Separate component for content to use auth hook
 const AppContent = () => {
   const { isAuthenticated } = useAuth();
 
-  // Start sync service when app loads
   React.useEffect(() => {
     if (isAuthenticated) {
       syncService.startAutoSync();

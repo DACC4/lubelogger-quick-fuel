@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { storageService } from "../services/storageService";
 import { api } from "../api/lubeLogger";
+import { Box, CircularProgress } from "@mui/material";
 
 export const AuthContext = createContext({
   isAuthenticated: false,
@@ -54,9 +55,14 @@ export const AuthProvider = ({ children }) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      </div>
+      <Box
+        minHeight="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CircularProgress />
+      </Box>
     );
   }
 

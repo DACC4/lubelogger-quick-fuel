@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Box, Typography, useTheme, Paper } from "@mui/material";
+
+// You can replace MUI icons or keep lucide-react icons if you prefer.
+// MUI icons for illustration:
+import CloudIcon from "@mui/icons-material/Cloud";
+import WifiOffIcon from "@mui/icons-material/WifiOff";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+
 import { storageService } from "../services/storageService";
-import { WifiOff, Cloud, AlertCircle } from "lucide-react";
 
 const OfflineIndicator = () => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
   const [pendingLogs, setPendingLogs] = useState(0);
+  const theme = useTheme();
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);
@@ -26,39 +34,84 @@ const OfflineIndicator = () => {
     };
 
     checkPendingLogs();
-
     // Check pending logs every minute
     const interval = setInterval(checkPendingLogs, 60000);
     return () => clearInterval(interval);
   }, []);
 
+  // If online and no pending logs
   if (!isOffline && pendingLogs === 0) {
     return (
-      <div className="fixed bottom-4 right-4 flex items-center gap-2 px-3 py-2 bg-green-100 text-green-800 rounded-full shadow-lg">
-        <Cloud className="h-4 w-4" />
-        <span className="text-sm">Connected</span>
-      </div>
+      <Paper
+        elevation={4}
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          right: 16,
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          px: 2,
+          py: 1,
+          backgroundColor: theme.palette.success.light,
+          color: theme.palette.success.contrastText,
+        }}
+      >
+        <CloudIcon fontSize="small" />
+        <Typography variant="body2">Connected</Typography>
+      </Paper>
     );
   }
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col gap-2">
+    <Box
+      sx={{
+        position: "fixed",
+        bottom: 16,
+        right: 16,
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+      }}
+    >
       {isOffline && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-yellow-100 text-yellow-800 rounded-full shadow-lg">
-          <WifiOff className="h-4 w-4" />
-          <span className="text-sm">Offline Mode</span>
-        </div>
+        <Paper
+          elevation={4}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            px: 2,
+            py: 1,
+            bgcolor: theme.palette.warning.light,
+            color: theme.palette.warning.contrastText,
+          }}
+        >
+          <WifiOffIcon fontSize="small" />
+          <Typography variant="body2">Offline Mode</Typography>
+        </Paper>
       )}
 
       {pendingLogs > 0 && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-full shadow-lg">
-          <AlertCircle className="h-4 w-4" />
-          <span className="text-sm">
+        <Paper
+          elevation={4}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            px: 2,
+            py: 1,
+            bgcolor: theme.palette.info.light,
+            color: theme.palette.info.contrastText,
+          }}
+        >
+          <WarningAmberIcon fontSize="small" />
+          <Typography variant="body2">
             {pendingLogs} log{pendingLogs === 1 ? "" : "s"} pending sync
-          </span>
-        </div>
+          </Typography>
+        </Paper>
       )}
-    </div>
+    </Box>
   );
 };
 
