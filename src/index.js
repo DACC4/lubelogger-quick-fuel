@@ -28,7 +28,7 @@ serviceWorkerRegistration.register({
       waitingServiceWorker.postMessage({ type: "SKIP_WAITING" });
     }
   },
-  onSuccess: registration => {
+  onSuccess: _ => {
     console.log('Service Worker registered successfully');
   }
 });

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fuel-logger-v1';
+const CACHE_NAME = 'lube-logger-quick-fuel-v1';
 const RUNTIME_CACHE = 'runtime-cache';
 
 // Resources to cache on install
@@ -122,55 +122,6 @@ self.addEventListener('sync', event => {
   if (event.tag === 'sync-fuel-logs') {
     event.waitUntil(syncPendingLogs());
   }
-});
-
-// Handle push notifications
-self.addEventListener('push', event => {
-  const options = {
-    body: event.data.text(),
-    icon: '/icon-192x192.png',
-    badge: '/badge-72x72.png',
-    vibrate: [100, 50, 100],
-    data: {
-      dateOfArrival: Date.now(),
-      primaryKey: 1
-    },
-    actions: [
-      {
-        action: 'explore',
-        title: 'View Logs',
-      },
-      {
-        action: 'close',
-        title: 'Close',
-      },
-    ]
-  };
-
-  event.waitUntil(
-    self.registration.showNotification('Fuel Logger', options)
-  );
-});
-
-// Handle notification clicks
-self.addEventListener('notificationclick', event => {
-  event.notification.close();
-
-  event.waitUntil(
-    clients.matchAll({ type: 'window' })
-      .then(clientList => {
-        if (clientList.length > 0) {
-          let client = clientList[0];
-          for (let i = 0; i < clientList.length; i++) {
-            if (clientList[i].focused) {
-              client = clientList[i];
-            }
-          }
-          return client.focus();
-        }
-        return clients.openWindow('/');
-      })
-  );
 });
 
 // Helper function to sync pending logs

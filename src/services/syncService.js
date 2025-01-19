@@ -1,5 +1,5 @@
-import { api } from '../api/lubeLogger';
-import { storageService } from './storageService';
+import { api } from "../api/lubeLogger";
+import { storageService } from "./storageService";
 
 class SyncService {
   constructor() {
@@ -9,12 +9,12 @@ class SyncService {
   }
 
   setupListeners() {
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.isOnline = true;
       this.syncPendingLogs();
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.isOnline = false;
     });
   }
@@ -37,13 +37,13 @@ class SyncService {
     if (!this.isOnline) return;
 
     const pendingLogs = await storageService.getPendingLogs();
-    
+
     for (const log of pendingLogs) {
       try {
         await api.addGasRecord(log.data.vehicleId, log.data);
         await storageService.removePendingLog(log.id);
       } catch (error) {
-        console.error('Failed to sync log:', error);
+        console.error("Failed to sync log:", error);
         // Keep the log in pending state if sync fails
       }
     }
@@ -55,7 +55,7 @@ class SyncService {
         await api.addGasRecord(vehicleId, logData);
         return true;
       } catch (error) {
-        console.error('Failed to add log, storing offline:', error);
+        console.error("Failed to add log, storing offline:", error);
         await storageService.addPendingLog({
           vehicleId,
           ...logData,

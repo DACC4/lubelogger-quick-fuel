@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { storageService } from '../services/storageService';
-import { syncService } from '../services/syncService';
-import { WifiOff, Cloud, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { storageService } from "../services/storageService";
+import { WifiOff, Cloud, AlertCircle } from "lucide-react";
 
 const OfflineIndicator = () => {
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
@@ -11,12 +10,12 @@ const OfflineIndicator = () => {
     const handleOnline = () => setIsOffline(false);
     const handleOffline = () => setIsOffline(true);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -27,7 +26,7 @@ const OfflineIndicator = () => {
     };
 
     checkPendingLogs();
-    
+
     // Check pending logs every minute
     const interval = setInterval(checkPendingLogs, 60000);
     return () => clearInterval(interval);
@@ -50,12 +49,12 @@ const OfflineIndicator = () => {
           <span className="text-sm">Offline Mode</span>
         </div>
       )}
-      
+
       {pendingLogs > 0 && (
         <div className="flex items-center gap-2 px-3 py-2 bg-blue-100 text-blue-800 rounded-full shadow-lg">
           <AlertCircle className="h-4 w-4" />
           <span className="text-sm">
-            {pendingLogs} log{pendingLogs === 1 ? '' : 's'} pending sync
+            {pendingLogs} log{pendingLogs === 1 ? "" : "s"} pending sync
           </span>
         </div>
       )}

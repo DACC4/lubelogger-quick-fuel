@@ -1,5 +1,3 @@
-import { storageService } from '../services/storageService';
-
 class LubeLoggerAPI {
   constructor(baseURL) {
     this.baseURL = baseURL;
@@ -16,7 +14,7 @@ class LubeLoggerAPI {
 
   async request(endpoint, options = {}) {
     const headers = {
-      ...(this.auth && { 'Authorization': `Basic ${this.auth}` }),
+      ...(this.auth && { Authorization: `Basic ${this.auth}` }),
       ...options.headers,
     };
 
@@ -32,7 +30,7 @@ class LubeLoggerAPI {
 
       return await response.json();
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error("API request failed:", error);
       throw error;
     }
   }
@@ -52,8 +50,9 @@ class LubeLoggerAPI {
 
   // Vehicles
   async getVehicles() {
-    const allVehicles = await this.request('/api/vehicles');
-    return allVehicles.filter(vehicle => vehicle.soldDate == null);
+    console.log("getVehicles");
+    const allVehicles = await this.request("/api/vehicles");
+    return allVehicles.filter((vehicle) => vehicle.soldDate == null);
   }
 
   async getVehicleInfo(vehicleId) {
@@ -63,25 +62,25 @@ class LubeLoggerAPI {
   // Gas Records
   async addGasRecord(vehicleId, data) {
     const formData = new FormData();
-    
+
     // Add basic fields
-    formData.append('date', data.date);
-    formData.append('odometer', data.odometer.toString());
-    formData.append('fuelConsumed', data.fuelConsumed.toString());
-    formData.append('cost', data.cost.toString());
-    formData.append('isFillToFull', data.isFillToFull.toString());
-    formData.append('missedFuelUp', 'false'); // Default to false since it's not in the form
-    formData.append('notes', 'Added from LubeLogger Quick Fuel')
+    formData.append("date", data.date);
+    formData.append("odometer", data.odometer.toString());
+    formData.append("fuelConsumed", data.fuelConsumed.toString());
+    formData.append("cost", data.cost.toString());
+    formData.append("isFillToFull", data.isFillToFull.toString());
+    formData.append("missedFuelUp", "false"); // Default to false since it's not in the form
+    formData.append("notes", "Added from LubeLogger Quick Fuel");
 
     // Add fuel type as tag
-    formData.append('tags', data.fuelType);
+    formData.append("tags", data.fuelType);
 
     // Add fuel type as extra field
-    formData.append('extrafields[0][name]', 'Fuel type');
-    formData.append('extrafields[0][value]', data.fuelType);
+    formData.append("extrafields[0][name]", "Fuel type");
+    formData.append("extrafields[0][value]", data.fuelType);
 
     return this.request(`/api/vehicle/gasrecords/add?vehicleId=${vehicleId}`, {
-      method: 'POST',
+      method: "POST",
       body: formData,
       headers: {
         // Don't set Content-Type header - let the browser set it with the boundary
@@ -90,4 +89,6 @@ class LubeLoggerAPI {
   }
 }
 
-export const api = new LubeLoggerAPI(process.env.REACT_APP_API_URL || 'https://default.api.com');
+export const api = new LubeLoggerAPI(
+  process.env.REACT_APP_API_URL || "https://default.api.com",
+);

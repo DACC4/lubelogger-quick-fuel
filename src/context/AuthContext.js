@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { storageService } from '../services/storageService';
-import { api } from '../api/lubeLogger';
+import React, { createContext, useState, useEffect } from "react";
+import { storageService } from "../services/storageService";
+import { api } from "../api/lubeLogger";
 
 export const AuthContext = createContext({
   isAuthenticated: false,
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       }
       return isValid;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       setIsAuthenticated(false);
       throw error;
     }
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       api.clearAuth();
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
       throw error;
     }
   };
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider 
+    <AuthContext.Provider
       value={{
         isAuthenticated,
         login,

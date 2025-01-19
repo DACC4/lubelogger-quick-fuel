@@ -1,5 +1,5 @@
 {
-  "name": "fuel-logger-quick-fuel",
+  "name": "lube-logger-quick-fuel",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -7,7 +7,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^4.2.4",
     "workbox-background-sync": "^7.3.0",
     "workbox-broadcast-update": "^7.3.0",
     "workbox-cacheable-response": "^7.3.0",
@@ -24,17 +23,20 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.{js,jsx}",
-    "format": "prettier --write src/**/*.{js,jsx,css,md}",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write src/**/*.{js,css}",
     "serve": "serve -s build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.37.3",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "serve": "^14.2.4",
+    "tailwindcss": "^3.4.17"
   },
   "browserslist": {
     "production": [
@@ -47,15 +49,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "eslint": "^9.18.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.37.3",
-    "postcss": "^8.4.49",
-    "prettier": "^3.4.2",
-    "serve": "^14.2.4",
-    "tailwindcss": "^3.4.17"
   }
 }

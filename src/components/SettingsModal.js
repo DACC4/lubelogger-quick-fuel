@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { storageService } from '../services/storageService';
-import { Settings, X, Trash2, LogOut } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
+import { storageService } from "../services/storageService";
+import { Settings, X, Trash2, LogOut } from "lucide-react";
 
 const SettingsModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,11 @@ const SettingsModal = () => {
   };
 
   const clearPendingLogs = async () => {
-    if (window.confirm('Are you sure you want to clear all pending logs? This cannot be undone.')) {
+    if (
+      window.confirm(
+        "Are you sure you want to clear all pending logs? This cannot be undone.",
+      )
+    ) {
       await storageService.clearPendingLogs();
       setPendingLogs([]);
     }
@@ -28,7 +32,11 @@ const SettingsModal = () => {
 
   const handleLogout = async () => {
     if (pendingLogs.length > 0) {
-      if (!window.confirm('You have pending logs that haven\'t been synced. Are you sure you want to logout?')) {
+      if (
+        !window.confirm(
+          "You have pending logs that haven't been synced. Are you sure you want to logout?",
+        )
+      ) {
         return;
       }
     }
@@ -52,7 +60,9 @@ const SettingsModal = () => {
           <div className="bg-white rounded-lg max-w-md w-full shadow-xl dark:bg-[var(--dark-card-color)]">
             {/* Header */}
             <div className="flex justify-between items-center p-4 border-b dark:border-[var(--dark-border-color)]">
-              <h2 className="text-lg font-semibold dark:text-[var(--dark-text-color)]">Settings</h2>
+              <h2 className="text-lg font-semibold dark:text-[var(--dark-text-color)]">
+                Settings
+              </h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-[var(--dark-card-color)]"
@@ -65,10 +75,14 @@ const SettingsModal = () => {
             <div className="p-4 space-y-4">
               {/* Pending Logs Section */}
               <div>
-                <h3 className="font-medium mb-2 dark:text-[var(--dark-text-color)]">Pending Logs</h3>
+                <h3 className="font-medium mb-2 dark:text-[var(--dark-text-color)]">
+                  Pending Logs
+                </h3>
                 <div className="bg-gray-50 rounded p-3 dark:bg-[var(--dark-input-bg-color)]">
                   <p className="text-sm text-gray-600 dark:text-[var(--dark-border-color)]">
-                    {pendingLogs.length} log{pendingLogs.length !== 1 ? 's' : ''} pending synchronization
+                    {pendingLogs.length} log
+                    {pendingLogs.length !== 1 ? "s" : ""} pending
+                    synchronization
                   </p>
                   {pendingLogs.length > 0 && (
                     <button

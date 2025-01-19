@@ -1,25 +1,23 @@
-// src/services/storageService.js
-
 class StorageService {
   constructor() {
     this.KEYS = {
-      CREDENTIALS: 'fuel_logger_credentials',
-      VEHICLES: 'fuel_logger_vehicles',
-      PENDING_LOGS: 'fuel_logger_pending_logs',
-      FORM_DATA: 'fuel_logger_form_data'
+      CREDENTIALS: "fuel_logger_credentials",
+      VEHICLES: "fuel_logger_vehicles",
+      PENDING_LOGS: "fuel_logger_pending_logs",
+      FORM_DATA: "fuel_logger_form_data",
     };
   }
 
   // Credentials management
   async saveCredentials(username, password) {
-    const encrypted = btoa(JSON.stringify({ username, password }));
-    localStorage.setItem(this.KEYS.CREDENTIALS, encrypted);
+    const encoded = btoa(JSON.stringify({ username, password }));
+    localStorage.setItem(this.KEYS.CREDENTIALS, encoded);
   }
 
   async getCredentials() {
-    const encrypted = localStorage.getItem(this.KEYS.CREDENTIALS);
-    if (!encrypted) return null;
-    return JSON.parse(atob(encrypted));
+    const encoded = localStorage.getItem(this.KEYS.CREDENTIALS);
+    if (!encoded) return null;
+    return JSON.parse(atob(encoded));
   }
 
   async clearCredentials() {
@@ -28,10 +26,13 @@ class StorageService {
 
   // Vehicles cache
   async saveVehicles(vehicles) {
-    localStorage.setItem(this.KEYS.VEHICLES, JSON.stringify({
-      timestamp: Date.now(),
-      data: vehicles,
-    }));
+    localStorage.setItem(
+      this.KEYS.VEHICLES,
+      JSON.stringify({
+        timestamp: Date.now(),
+        data: vehicles,
+      }),
+    );
   }
 
   async getVehicles() {
@@ -58,7 +59,7 @@ class StorageService {
 
   async removePendingLog(id) {
     const pending = await this.getPendingLogs();
-    const updated = pending.filter(log => log.id !== id);
+    const updated = pending.filter((log) => log.id !== id);
     localStorage.setItem(this.KEYS.PENDING_LOGS, JSON.stringify(updated));
   }
 
@@ -68,14 +69,19 @@ class StorageService {
 
   // Form data persistence
   async saveFormData(vehicle_id, data) {
-    localStorage.setItem(this.KEYS.FORM_DATA + '_id' + vehicle_id, JSON.stringify({
-      timestamp: Date.now(),
-      data,
-    }));
+    localStorage.setItem(
+      this.KEYS.FORM_DATA + "_id" + vehicle_id,
+      JSON.stringify({
+        timestamp: Date.now(),
+        data,
+      }),
+    );
   }
 
   async getFormData(vehicle_id) {
-    const saved = localStorage.getItem(this.KEYS.FORM_DATA + '_id' + vehicle_id);
+    const saved = localStorage.getItem(
+      this.KEYS.FORM_DATA + "_id" + vehicle_id,
+    );
     return saved ? JSON.parse(saved) : null;
   }
 
