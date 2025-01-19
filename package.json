@@ -36,7 +36,6 @@
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.37.3",
-    "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "serve": "^14.2.4"
   },

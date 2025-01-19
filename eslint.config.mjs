@@ -18,6 +18,7 @@ export default [
       globals: {
         ...globals.browser,
       },
-    }
+    },
+    rules: reactHooks.configs.recommended.rules
   }
 ];

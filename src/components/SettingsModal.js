@@ -44,7 +44,7 @@ const SettingsModal = () => {
 
   const clearPendingLogs = async () => {
     const confirmClear = window.confirm(
-      "Are you sure you want to clear all pending logs? This cannot be undone."
+      "Are you sure you want to clear all pending logs? This cannot be undone.",
     );
     if (confirmClear) {
       await storageService.clearPendingLogs();
@@ -55,7 +55,7 @@ const SettingsModal = () => {
   const handleLogout = async () => {
     if (pendingLogs.length > 0) {
       const confirmLogout = window.confirm(
-        "You have pending logs that haven't been synced. Are you sure you want to logout?"
+        "You have pending logs that haven't been synced. Are you sure you want to logout?",
       );
       if (!confirmLogout) return;
     }
@@ -74,7 +74,12 @@ const SettingsModal = () => {
       </IconButton>
 
       {/* Modal (Dialog) */}
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} maxWidth="xs" fullWidth>
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
         <DialogTitle sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6">Settings</Typography>
           <IconButton
@@ -94,8 +99,8 @@ const SettingsModal = () => {
             </Typography>
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Typography variant="body2">
-                {pendingLogs.length} log{pendingLogs.length !== 1 ? "s" : ""} pending
-                synchronization
+                {pendingLogs.length} log{pendingLogs.length !== 1 ? "s" : ""}{" "}
+                pending synchronization
               </Typography>
               {pendingLogs.length > 0 && (
                 <Button
@@ -115,7 +120,7 @@ const SettingsModal = () => {
             control={
               <Switch
                 checked={mode === "dark"} // Reflect current mode
-                onChange={toggleTheme}     // Call toggleTheme on switch
+                onChange={toggleTheme} // Call toggleTheme on switch
                 color="primary"
               />
             }
